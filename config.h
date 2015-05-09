@@ -4,7 +4,7 @@
 /** \file       config.h
  *******************************************************************************
  *
- *  \brief      Basic configurations 
+ *  \brief      Basic configurations
  *
  *  \author     wht4
  *

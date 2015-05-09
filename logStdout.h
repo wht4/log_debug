@@ -26,7 +26,9 @@ extern "C" {
 #include <stdio.h>
 #include <stdarg.h>
 
-/****** Macros ****************************************************************/	
+#include "config.h"
+
+/****** Macros ****************************************************************/
 
 /****** Data types ************************************************************/
 
@@ -46,16 +48,16 @@ extern "C" {
  *  @return       void
  *
  ******************************************************************************/
-#ifdef LOG_STDOUT
-static inline void 
+#if (CONFIG_LOG_STDOUT > 0)
+static inline void
 log_stdout_init(void) {
-	/* Nothing to do here */
+    /* Nothing to do here */
 }
-#else 
-static inline void 
+#else
+static inline void
 log_stdout_init(void) {
 }
-#endif /* #ifdef LOG_STDOUT */
+#endif /* #if (CONFIG_LOG_STDOUT > 0) */
 
 
 /*******************************************************************************
@@ -64,29 +66,33 @@ log_stdout_init(void) {
 /** @brief        Log a debug message to stdout
  *
  *  @type         global
- * 
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
- *  @param[in]    ...    Variadic arguments
+ *  @param[in]    args   Variadic arguments
  *
  *  @return       void
  *
  ******************************************************************************/
-#ifdef LOG_STDOUT
-static inline void 
+#if (CONFIG_LOG_STDOUT > 0)
+static inline void
 log_stdout_debug(const char * fmt, va_list args) {
-	
-	flockfile(stdout);
-	printf("\n DEBUG:   %s;\n          ",__FUNCTION__);
-	vprintf(fmt, args);
-	fflush(stdout); 
-	funlockfile(stdout); 
+
+    flockfile(stdout);
+    printf("\n DEBUG:   %s;\n          ",__FUNCTION__);
+    vprintf(fmt, args);
+    fflush(stdout);
+    funlockfile(stdout);
 }
 #else
-static inline void 
-log_stdout_debug(const char * fmt, ...) {
+static inline void
+log_stdout_debug(const char * fmt, va_list args) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
+    (void) args;
 }
-#endif /* #ifdef LOG_STDOUT */
+#endif /* #if (CONFIG_LOG_STDOUT > 0) */
 
 
 /*******************************************************************************
@@ -95,29 +101,33 @@ log_stdout_debug(const char * fmt, ...) {
 /** @brief        Log an info message to stdout
  *
  *  @type         global
- * 
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
- *  @param[in]    ...    Variadic arguments
+ *  @param[in]    args   Variadic arguments
  *
  *  @return       void
  *
  ******************************************************************************/
-#ifdef LOG_STDOUT
-static inline void 
+#if (CONFIG_LOG_STDOUT > 0)
+static inline void
 log_stdout_info(const char * fmt, va_list args) {
-		
-	flockfile(stdout);
-	printf("\n INFO:    %s;\n          ",__FUNCTION__);
-	vprintf(fmt, args);
-	fflush(stdout); 
-	funlockfile(stdout); 
+
+    flockfile(stdout);
+    printf("\n INFO:    %s;\n          ",__FUNCTION__);
+    vprintf(fmt, args);
+    fflush(stdout);
+    funlockfile(stdout);
 }
 #else
-static inline void 
-log_stdout_info(const char * fmt, ...) {
+static inline void
+log_stdout_info(const char * fmt, va_list args) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
+    (void) args;
 }
-#endif /* #ifdef LOG_STDOUT */
+#endif /* #if (CONFIG_LOG_STDOUT > 0) */
 
 
 /*******************************************************************************
@@ -126,29 +136,33 @@ log_stdout_info(const char * fmt, ...) {
 /** @brief        Log a warning message to stdout
  *
  *  @type         global
- * 
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
- *  @param[in]    ...    Variadic arguments
+ *  @param[in]    args   Variadic arguments
  *
  *  @return       void
  *
  ******************************************************************************/
-#ifdef LOG_STDOUT
-static inline void 
+#if (CONFIG_LOG_STDOUT > 0)
+static inline void
 log_stdout_warning(const char * fmt, va_list args) {
 
-	flockfile(stdout);
-	printf("\n WARNING: %s;\n          ",__FUNCTION__);
-	vprintf(fmt, args);
-	fflush(stdout); 
-	funlockfile(stdout); 
+    flockfile(stdout);
+    printf("\n WARNING: %s;\n          ",__FUNCTION__);
+    vprintf(fmt, args);
+    fflush(stdout);
+    funlockfile(stdout);
 }
 #else
-static inline void 
-log_stdout_warning(const char * fmt, ...) {
+static inline void
+log_stdout_warning(const char * fmt, va_list args) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
+    (void) args;
 }
-#endif /* #ifdef LOG_STDOUT */
+#endif /* #if (CONFIG_LOG_STDOUT > 0) */
 
 
 /*******************************************************************************
@@ -157,29 +171,33 @@ log_stdout_warning(const char * fmt, ...) {
 /** @brief        Log an error message to stdout
  *
  *  @type         global
- * 
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
- *  @param[in]    ...    Variadic arguments
+ *  @param[in]    args   Variadic arguments
  *
  *  @return       void
  *
  ******************************************************************************/
-#ifdef LOG_STDOUT
-static inline void 
+#if (CONFIG_LOG_STDOUT > 0)
+static inline void
 log_stdout_error(const char * fmt, va_list args) {
-	
-	flockfile(stdout);
-	printf("\n ERROR:   %s;\n          ",__FUNCTION__);
-	vprintf(fmt, args);
-	fflush(stdout); 
-	funlockfile(stdout); 
+
+    flockfile(stdout);
+    printf("\n ERROR:   %s;\n          ",__FUNCTION__);
+    vprintf(fmt, args);
+    fflush(stdout);
+    funlockfile(stdout);
 }
 #else
-static inline void 
-log_stdout_error(const char * fmt, ...) {
+static inline void
+log_stdout_error(const char * fmt, va_list args) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
+    (void) args;
 }
-#endif /* #ifdef LOG_STDOUT */
+#endif /* #if (CONFIG_LOG_STDOUT > 0) */
 
 
 

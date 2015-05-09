@@ -6,16 +6,16 @@
  *
  *  \brief      Generic log mechanism for debug messages
  *              <p>
- *              The log messages are grouped in four different levels (DEBUG, 
- *              INFO, WARNING and ERROR). The log messages can be bypassed to 
+ *              The log messages are grouped in four different levels (DEBUG,
+ *              INFO, WARNING and ERROR). The log messages can be bypassed to
  *              different acceptors (console, file, ...).
  *              <p>
  *              For logging messages just use:
  *              <ul>
- *                  <li> Debug messages are logged with: LOG_DEBUG("msg"); 
- *                  <li> Info messages are logged with: LOG_INFO("msg"); 
- *                  <li> Warning messages are logged with: LOG_WARNING("msg"); 
- *                  <li> Error messages are logged with: LOG_ERROR("msg"); 
+ *                  <li> Debug messages are logged with: log_debug("msg");
+ *                  <li> Info messages are logged with: log_info("msg");
+ *                  <li> Warning messages are logged with: log_warning("msg");
+ *                  <li> Error messages are logged with: log_error("msg");
  *              </ul>
  *
  *  \author     wht4
@@ -38,11 +38,7 @@ extern "C" {
 #include <stdarg.h>
 
 #include "config.h"
-
-#if (CONFIG_LOG_STDOUT > 0)
-    #define LOG_STDOUT
-    #include "logStdout.h"
-#endif /* (CONFIG_LOG_STDOUT == 1) */
+#include "logStdout.h"
 
 /****** Macros ****************************************************************/
 
@@ -65,10 +61,10 @@ extern "C" {
  *  @return       void
  *
  ******************************************************************************/
-static inline void 
+static inline void
 log_init(void) {
-	
-	log_stdout_init();
+
+    log_stdout_init();
 }
 
 
@@ -79,7 +75,7 @@ log_init(void) {
  *
  *  @type         global
  *
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
  *  @param[in]    ...    Variadic arguments
  *
@@ -87,16 +83,21 @@ log_init(void) {
  *
  ******************************************************************************/
 #if (CONFIG_LOG_LEVEL_DEBUG > 0)
-static inline void 
+static inline void
 log_debug(const char * fmt, ...) {
-	
-	va_list args;
+
+    va_list args;
     va_start(args, fmt);
-	log_stdout_debug(fmt, args);
-	va_end(args);
+    log_stdout_debug(fmt, args);
+    /* add other acceptors here */
+    va_end(args);
 }
-#else 
+#else
+static inline void
 log_debug(const char * fmt, ...) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
 }
 #endif /* #if (CONFIG_LOG_LEVEL_DEBUG > 0) */
 
@@ -108,7 +109,7 @@ log_debug(const char * fmt, ...) {
  *
  *  @type         global
  *
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
  *  @param[in]    ...    Variadic arguments
  *
@@ -116,16 +117,21 @@ log_debug(const char * fmt, ...) {
  *
  ******************************************************************************/
 #if (CONFIG_LOG_LEVEL_INFO > 0)
-static inline void 
+static inline void
 log_info(const char * fmt, ...) {
-	
-	va_list args;
+
+    va_list args;
     va_start(args, fmt);
-	log_stdout_info(fmt, args);
-	va_end(args);
+    log_stdout_info(fmt, args);
+    /* add other acceptors here */
+    va_end(args);
 }
-#else 
+#else
+static inline void
 log_info(const char * fmt, ...) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
 }
 #endif /* #if (CONFIG_LOG_LEVEL_INFO > 0) */
 
@@ -137,7 +143,7 @@ log_info(const char * fmt, ...) {
  *
  *  @type         global
  *
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
  *  @param[in]    ...    Variadic arguments
  *
@@ -145,16 +151,21 @@ log_info(const char * fmt, ...) {
  *
  ******************************************************************************/
 #if (CONFIG_LOG_LEVEL_WARNING > 0)
-static inline void 
+static inline void
 log_warning(const char * fmt, ...) {
-	
-	va_list args;
+
+    va_list args;
     va_start(args, fmt);
-	log_stdout_warning(fmt, args);
-	va_end(args);
+    log_stdout_warning(fmt, args);
+    /* add other acceptors here */
+    va_end(args);
 }
-#else 
+#else
+static inline void
 log_warning(const char * fmt, ...) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
 }
 #endif /* #if (CONFIG_LOG_LEVEL_WARNING > 0) */
 
@@ -166,7 +177,7 @@ log_warning(const char * fmt, ...) {
  *
  *  @type         global
  *
- *  @param[in]    fmt    String that contains the text to be written with the 
+ *  @param[in]    fmt    String that contains the text to be written with the
  *                       expected format
  *  @param[in]    ...    Variadic arguments
  *
@@ -174,16 +185,21 @@ log_warning(const char * fmt, ...) {
  *
  ******************************************************************************/
 #if (CONFIG_LOG_LEVEL_ERROR > 0)
-static inline void 
+static inline void
 log_error(const char * fmt, ...) {
-	
-	va_list args;
+
+    va_list args;
     va_start(args, fmt);
-	log_stdout_error(fmt, args);
-	va_end(args);
+    log_stdout_error(fmt, args);
+    /* add other acceptors here */
+    va_end(args);
 }
-#else 
+#else
+static inline void
 log_error(const char * fmt, ...) {
+
+    /* Prevent compiler warnings */
+    (void) fmt;
 }
 #endif /* #if (CONFIG_LOG_LEVEL_WARNING > 0) */
 
