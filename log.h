@@ -33,29 +33,12 @@ extern "C" {
 /****** Header-Files **********************************************************/
 #include "config.h"
 
-#if (CONFIG_LOG_CONSOLE == 1)
-    #define LOG_CONSOLE
-    #include "LogConsole.h"
-#endif // (CONFIG_LOG_CONSOLE == 1)
+#if (CONFIG_LOG_STDOUT > 0)
+    #define LOG_STDOUT
+    #include "logStdout.h"
+#endif /* (CONFIG_LOG_STDOUT == 1) */
 
 /****** Macros ****************************************************************/
-
-#if (CONFIG_LOG_LEVEL_DEBUG == 1)
-    #define LOG_DEBUG
-#endif /* (CONFIG_LOG_LEVEL_DEBUG == 1) */
-
-#if (CONFIG_LOG_LEVEL_INFO == 1)
-    #define LOG_INFO
-#endif /* (CONFIG_LOG_LEVEL_INFO == 1) */
-
-#if (CONFIG_LOG_LEVEL_WARNING == 1)
-    #define LOG_WARNING
-#endif /* (CONFIG_LOG_LEVEL_WARNING == 1) */
-
-#if (CONFIG_LOG_LEVEL_ERROR == 1)
-    #define LOG_ERROR
-#endif /* (CONFIG_LOG_LEVEL_ERROR == 1) */
-
 
 /*******************************************************************************
  *  function :    LOG_INIT
