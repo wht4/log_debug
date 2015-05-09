@@ -49,15 +49,15 @@ main(int argc, char **argv) {
 	(void) argc;
 	(void) argv;
 	
-	LOG_DEBUG("This is a debug message without extra arguments");
-	LOG_INFO("This is a info message without extra arguments");
-	LOG_WARNING("This is a warning message without extra arguments");
-	LOG_ERROR("This is a error message without extra arguments");
+	log_debug("This is a debug message without extra arguments");
+	log_info("This is a info message without extra arguments");
+	log_warning("This is a warning message without extra arguments");
+	log_error("This is a error message without extra arguments");
 	
 	example_whithinFct();
 	
 	for(i = 0; i < 6; i++) {
-		LOG_DEBUG("Loop count: %d", i);
+		log_debug("Loop count: %d", i);
 		sleep(1);
 	}
 	
@@ -71,8 +71,8 @@ main(int argc, char **argv) {
  static void
  example_whithinFct(void) {
 	 
-	LOG_DEBUG("Debug message within function");
-	LOG_INFO("Info message within function");
-	LOG_WARNING("Warning message within function");
-	LOG_ERROR("Error message within function");
+	log_debug("Debug message within function");
+	log_info("Info message within function");
+	log_warning("Warning message within function");
+	log_error("Error message within function");
 }

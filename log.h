@@ -22,7 +22,11 @@
  *
  ******************************************************************************/
 /*
- *  function    .
+ *  function    log_init
+ *              log_debug
+ *              log_info
+ *              log_warning
+ *              log_error
  *
  ******************************************************************************/
 
@@ -31,6 +35,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 /****** Header-Files **********************************************************/
+#include <stdarg.h>
+
 #include "config.h"
 
 #if (CONFIG_LOG_STDOUT > 0)
@@ -40,95 +46,6 @@ extern "C" {
 
 /****** Macros ****************************************************************/
 
-/*******************************************************************************
- *  function :    LOG_INIT
- ******************************************************************************/
-/**
- * Initialize the log mechanism
- * \return      void
- */
-#define LOG_INIT() {   \
-	LOG_STDOUT_INIT(); \
-}
-
-
-
-/*******************************************************************************
- *  function :    LOG_DEBUG
- ******************************************************************************/
-/**
- * Log a debug message
- * \param[in]   FormatString   String that contains the text to be written
- * \param[in]   Args           Depending on the format string, the function
- *                             may expect a sequence of additional arguments
- * \return      void
- */
-#if (CONFIG_LOG_LEVEL_DEBUG > 0)
-	#define LOG_DEBUG(FormatString, Args...) {   \
-		LOG_STDOUT_DEBUG(FormatString, ##Args);  \
-	}
-#else
-	#define LOG_DEBUG(...)
-#endif /* #if (CONFIG_LOG_LEVEL_DEBUG > 0) */ 
-
-
-/*******************************************************************************
- *  function :    LOG_INFO
- ******************************************************************************/
-/**
- * Log an info message
- * \param[in]   FormatString   String that contains the text to be written
- * \param[in]   Args           Depending on the format string, the function
- *                             may expect a sequence of additional arguments
- * \return      void
- */
-#if (CONFIG_LOG_LEVEL_INFO > 0)
-	#define LOG_INFO(FormatString, Args...) {   \
-		LOG_STDOUT_INFO(FormatString, ##Args);  \
-	}
-#else
-	#define LOG_INFO(...)
-#endif /* #if (CONFIG_LOG_LEVEL_INFO > 0) */
-
-
-/*******************************************************************************
- *  function :    LOG_WARNING
- ******************************************************************************/
-/**
- * Log a warning message
- * \param[in]   FormatString   String that contains the text to be written
- * \param[in]   Args           Depending on the format string, the function
- *                             may expect a sequence of additional arguments
- * \return      void
- */
-#if (CONFIG_LOG_LEVEL_WARNING > 0)
-	#define LOG_WARNING(FormatString, Args...) {   \
-		LOG_STDOUT_WARNING(FormatString, ##Args);  \
-	}
-#else
-	#define LOG_WARNING(...)
-#endif /* #if (CONFIG_LOG_LEVEL_WARNING > 0) */
-
-
-/*******************************************************************************
- *  function :    LOG_ERROR
- ******************************************************************************/
-/**
- * Log an error message
- * \param[in]   FormatString   String that contains the text to be written
- * \param[in]   Args           Depending on the format string, the function
- *                             may expect a sequence of additional arguments
- * \return      void
- */
-#if (CONFIG_LOG_LEVEL_ERROR > 0)
-	#define LOG_ERROR(FormatString, Args...) {   \
-		LOG_STDOUT_ERROR(FormatString, ##Args);  \
-	}
-#else
-	#define LOG_ERROR(...)
-#endif /* #if (CONFIG_LOG_LEVEL_ERROR > 0) */
-
-
 /****** Data types ************************************************************/
 
 /****** Fuction prototypes ****************************************************/
@@ -136,6 +53,141 @@ extern "C" {
 /****** Data ******************************************************************/
 
 /****** Implementation ********************************************************/
+
+
+/*******************************************************************************
+ *  function :    log_debug
+ ******************************************************************************/
+/** @brief        Initialize log mechanism
+ *
+ *  @type         global
+ *
+ *  @return       void
+ *
+ ******************************************************************************/
+static inline void 
+log_init(void) {
+	
+	log_stdout_init();
+}
+
+
+/*******************************************************************************
+ *  function :    log_debug
+ ******************************************************************************/
+/** @brief        Log a debug message
+ *
+ *  @type         global
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the 
+ *                       expected format
+ *  @param[in]    ...    Variadic arguments
+ *
+ *  @return       void
+ *
+ ******************************************************************************/
+#if (CONFIG_LOG_LEVEL_DEBUG > 0)
+static inline void 
+log_debug(const char * fmt, ...) {
+	
+	va_list args;
+    va_start(args, fmt);
+	log_stdout_debug(fmt, args);
+	va_end(args);
+}
+#else 
+log_debug(const char * fmt, ...) {
+}
+#endif /* #if (CONFIG_LOG_LEVEL_DEBUG > 0) */
+
+
+/*******************************************************************************
+ *  function :    log_info
+ ******************************************************************************/
+/** @brief        Log an info message
+ *
+ *  @type         global
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the 
+ *                       expected format
+ *  @param[in]    ...    Variadic arguments
+ *
+ *  @return       void
+ *
+ ******************************************************************************/
+#if (CONFIG_LOG_LEVEL_INFO > 0)
+static inline void 
+log_info(const char * fmt, ...) {
+	
+	va_list args;
+    va_start(args, fmt);
+	log_stdout_info(fmt, args);
+	va_end(args);
+}
+#else 
+log_info(const char * fmt, ...) {
+}
+#endif /* #if (CONFIG_LOG_LEVEL_INFO > 0) */
+
+
+/*******************************************************************************
+ *  function :    log_warning
+ ******************************************************************************/
+/** @brief        Log a warning message
+ *
+ *  @type         global
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the 
+ *                       expected format
+ *  @param[in]    ...    Variadic arguments
+ *
+ *  @return       void
+ *
+ ******************************************************************************/
+#if (CONFIG_LOG_LEVEL_WARNING > 0)
+static inline void 
+log_warning(const char * fmt, ...) {
+	
+	va_list args;
+    va_start(args, fmt);
+	log_stdout_warning(fmt, args);
+	va_end(args);
+}
+#else 
+log_warning(const char * fmt, ...) {
+}
+#endif /* #if (CONFIG_LOG_LEVEL_WARNING > 0) */
+
+
+/*******************************************************************************
+ *  function :    log_error
+ ******************************************************************************/
+/** @brief        Log an error message
+ *
+ *  @type         global
+ *
+ *  @param[in]    fmt    String that contains the text to be written with the 
+ *                       expected format
+ *  @param[in]    ...    Variadic arguments
+ *
+ *  @return       void
+ *
+ ******************************************************************************/
+#if (CONFIG_LOG_LEVEL_ERROR > 0)
+static inline void 
+log_error(const char * fmt, ...) {
+	
+	va_list args;
+    va_start(args, fmt);
+	log_stdout_error(fmt, args);
+	va_end(args);
+}
+#else 
+log_error(const char * fmt, ...) {
+}
+#endif /* #if (CONFIG_LOG_LEVEL_WARNING > 0) */
+
+
 
 #ifdef __cplusplus
 }
