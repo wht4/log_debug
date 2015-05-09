@@ -1,0 +1,5 @@
+*.d
+*.o
+log_debug
+
+
