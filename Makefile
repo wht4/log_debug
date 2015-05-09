@@ -1,78 +1,48 @@
 
 ## Customizable Section:
-##==========================================================================
+## *********************
 
-# The pre-processor and compiler options.
+# User flags
 DEBUG = -g
 MY_CFLAGS = $(DEBUG) -Wall -Wextra -pedantic
-
-# The linker options.
-MY_LIBS   =
-
-# The pre-processor options used by the cpp (man cpp for more).
 CPPFLAGS  = $(DEBUG) -Wall -Wextra -pedantic
-
-# The options used in linking as well as in any direct use of ld.
+MY_LIBS   =
 LDFLAGS   = $(DEBUG)
 
 # The directories in which source files reside.
-# If not specified, only the current directory will be searched.
-SRCDIRS   =
+SRCDIRS   = .
 
 # The executable file name.
-# If not specified, current directory name or `a.out' will be used.
 EXECUTABLE   = log_debug
 
 
-## Implicit Section: change the following only when necessary.
-##==========================================================================
+## Standard Section: 
+## ******************
 
-# The source file types (headers excluded).
+# Extensions to look for
 SRCEXTS = .c .cpp .c++
-
-# The header file types.
 HDREXTS = .h .hpp .h++
 
-# The pre-processor and compiler options.
-# Users can override those variables from the command line.
+# The pre-processor and compiler flags
 CFLAGS  = 
 CXXFLAGS= 
 
-# The C program compiler.
+# Compiler
 CC     = gcc
-
-# The C++ program compiler.
 CXX    = g++
-
-# Un-comment the following line to compile C programs as C++ ones.
-#CC     = $(CXX)
-
-# The command used to delete file.
 RM     = rm -f
 
-
-## Stable Section: usually no need to be changed. But you can add more.
-##==========================================================================
+# General defines
 SHELL   = /bin/sh
 EMPTY   =
 SPACE   = $(EMPTY) $(EMPTY)
-ifeq ($(EXECUTABLE),)
-  CUR_PATH_NAMES = $(subst /,$(SPACE),$(subst $(SPACE),_,$(CURDIR)))
-  EXECUTABLE = $(word $(words $(CUR_PATH_NAMES)),$(CUR_PATH_NAMES))
-  ifeq ($(EXECUTABLE),)
-    EXECUTABLE = a.out
-  endif
-endif
-ifeq ($(SRCDIRS),)
-  SRCDIRS = .
-endif
 SOURCES = $(foreach d,$(SRCDIRS),$(wildcard $(addprefix $(d)/*,$(SRCEXTS))))
 HEADERS = $(foreach d,$(SRCDIRS),$(wildcard $(addprefix $(d)/*,$(HDREXTS))))
 SRC_CXX = $(filter-out %.c,$(SOURCES))
 OBJS    = $(addsuffix .o, $(basename $(SOURCES)))
 DEPS    = $(OBJS:.o=.d)
 
-## Define some useful variables.
+# Define some useful variables.
 DEP_OPT = $(shell if `$(CC) --version | grep "GCC" >/dev/null`; then \
                   echo "-MM -MP"; else echo "-M"; fi )
 DEPEND      = $(CC)  $(DEP_OPT)  $(MY_CFLAGS) $(CFLAGS) $(CPPFLAGS)
