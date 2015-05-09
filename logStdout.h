@@ -49,12 +49,12 @@ extern "C" {
  * \return      void
  */
 #ifdef LOG_STDOUT
-	#define LOG_STDOUT_DEBUG(FormatString, Args...) {  \
-		flockfile(stdout);                             \
-		printf("\n DEBUG:   %s;\n\t",__FUNCTION__);    \
-		printf(FormatString, ##Args);                  \
-		fflush(stdout);                                \
-		funlockfile(stdout);                           \
+	#define LOG_STDOUT_DEBUG(FormatString, Args...) {        \
+		flockfile(stdout);                                   \
+		printf("\n DEBUG:   %s;\n          ",__FUNCTION__);  \
+		printf(FormatString, ##Args);                        \
+		fflush(stdout);                                      \
+		funlockfile(stdout);                                 \
 	}
 #else
 	#define LOG_STDOUT_DEBUG(...)
@@ -72,12 +72,12 @@ extern "C" {
  * \return      void
  */
 #ifdef LOG_STDOUT
-	#define LOG_STDOUT_INFO(FormatString, Args...) {   \
-		flockfile(stdout);                             \
-		printf("\n INFO:    %s;\n\t",__FUNCTION__);    \
-		printf(FormatString, ##Args);                  \
-		fflush(stdout);                                \
-		funlockfile(stdout);                           \
+	#define LOG_STDOUT_INFO(FormatString, Args...) {           \
+		flockfile(stdout);                                     \
+		printf("\n INFO:    %s;\n          ",__FUNCTION__);    \
+		printf(FormatString, ##Args);                          \
+		fflush(stdout);                                        \
+		funlockfile(stdout);                                   \
 	}
 #else
 	#define LOG_STDOUT_INFO(...)
@@ -95,12 +95,12 @@ extern "C" {
  * \return      void
  */
 #ifdef LOG_STDOUT
-	#define LOG_STDOUT_WARNING(FormatString, Args...) {  \
-		flockfile(stdout);                               \
-		printf("\n WARNING: %s;\n\t",__FUNCTION__);      \
-		printf(FormatString, ##Args);                    \
-		fflush(stdout);                                  \
-		funlockfile(stdout);                             \
+	#define LOG_STDOUT_WARNING(FormatString, Args...) {          \
+		flockfile(stdout);                                       \
+		printf("\n WARNING: %s;\n          ",__FUNCTION__);      \
+		printf(FormatString, ##Args);                            \
+		fflush(stdout);                                          \
+		funlockfile(stdout);                                     \
 	}
 #else
 	#define LOG_STDOUT_WARNING(...)
@@ -118,12 +118,12 @@ extern "C" {
  * \return      void
  */
 #ifdef LOG_STDOUT
-	#define LOG_STDOUT_ERROR(FormatString, Args...) {  \
-		flockfile(stdout);                             \
-		printf("\n ERROR:   %s;\n\t",__FUNCTION__);    \
-		printf(FormatString, ##Args);                  \
-		fflush(stdout);                                \
-		funlockfile(stdout);                           \
+	#define LOG_STDOUT_ERROR(FormatString, Args...) {          \
+		flockfile(stdout);                                     \
+		printf("\n ERROR:   %s;\n          ",__FUNCTION__);    \
+		printf(FormatString, ##Args);                          \
+		fflush(stdout);                                        \
+		funlockfile(stdout);                                   \
 }
 #else
 	#define LOG_STDOUT_ERROR(...)
