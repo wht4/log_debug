@@ -6,9 +6,8 @@
  *
  *  @author     wht4
  *
- *  @version    <ul>
- *                  <li> V1.0; May 2015; wht4; initial release
- *              </ul>
+ *  @version    Last modifications
+ *                 \li V1.0, May 2014, wht4, initial release
  *
  ******************************************************************************/
 /*
